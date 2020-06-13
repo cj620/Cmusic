@@ -7,3 +7,9 @@ export function getRemdSongList(){
     url:'/personalized'
   })
 }
+//获取最新歌曲
+export function getNewSongList(){
+  return request({
+    url:'/personalized/newsong'
+  })
+}

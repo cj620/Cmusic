@@ -6,7 +6,7 @@
           推荐歌单
         </div>
       </div>
-      <!-- 歌单列表 -->
+ <!-- 歌单列表 -->
       <div class="rec-content">
         <ul>
 
@@ -21,20 +21,31 @@
                 {{(value.playCount / 10000).toFixed() }}万
               </span>
             </div>
-
             <div class="remd-text">{{value.name}}</div>
 
           </li>
-
         </ul>
       </div>
+    </div>
+ <!-- 最新音乐 -->
+    <div class="news-music">
+      <div class="news-music-title">
+        <div>
+          最新音乐
+        </div>
+      </div>
+      <SongsList :song-list=$store.getters.newSongList />
     </div>
   </div>
 </template>
 
 <script>
 import {Toast} from 'vant'
+import SongsList from '../SongList/index'
   export default {
+    components:{
+      SongsList
+    },
     data() {
       return {
         remdList:['dds','dsd']
@@ -54,8 +65,21 @@ import {Toast} from 'vant'
           loadingType: 'spinner'
         });
       })
+      this.$store.dispatch('getNewSongList')
+      .then(() => {
+        Toast.clear();
+      })
+      .catch(() => {
+        Toast.loading({
+          duration: 0,
+          // 持续展示 toast
+          forbidClick: true,
+          // 禁用背景点击
+          loadingType: 'spinner'
+        });
+      })
       // console.log(this.remdList);
-      this.remdList = this.$store.state.remdList  //传入组件
+      // this.remdList = this.$store.state.remdList  //传入组件
       
       
       
@@ -108,6 +132,19 @@ import {Toast} from 'vant'
           }
         }
       }
+    }
+  }
+}
+.news-music {
+  .news-music-title {
+    padding: 20px 0;
+    > div {
+      height: 18px;
+      line-height: 18px;
+      border-left: 2px solid #c4483b;
+      border-top: 2px solid transparent;
+      padding-left: 10px;
+      font-size: 16px;
     }
   }
 }
