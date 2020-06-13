@@ -7,14 +7,17 @@
           >
           <div>
             <div class="news-txt-top">{{value.name}}</div>
-            <div class="news_txt_bottom">
+            <div class="news-txt-bottom">
             <div />
             <div>{{ value.song.artists[0].name }} - {{ value.name }}</div>
           </div>
           </div>
-
+          <div class=".news-icon">
+          <van-icon name="play-circle-o" />
+          </div>
       </li>
     </ul>
+    <div v-else class="tips">暂无数据</div>
   </div>
 </template>
 

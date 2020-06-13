@@ -1,14 +1,29 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  //主页面
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import('@/views/Home'),
+  },
+  //歌单详情页面
+  {
+    path: '/songMenuDetail',
+    component: () => import('@/views/SongMenu')
+  },
+  //歌曲播放界面
+  {
+    path: '/MusicPlayr',
+    component: () => import('@/views/MusicPlayr')
+  },
+  //错误页面
+  {
+    path: '*',
+    component: () => import('@/views/404')
   }
 ]
 
