@@ -3,3 +3,4 @@ const mutations = {
     state.remdList = remdList
   }
 }
+export default mutations
