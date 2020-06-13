@@ -48,7 +48,7 @@ import SongsList from '../SongList/index'
     },
     data() {
       return {
-        remdList:['dds','dsd']
+        remdList:[]
       }
     },
     mounted(){
@@ -78,7 +78,7 @@ import SongsList from '../SongList/index'
           loadingType: 'spinner'
         });
       })
-      // console.log(this.remdList);
+      // console.log(this.$store.state.remdList);
       // this.remdList = this.$store.state.remdList  //传入组件
       
       

@@ -13,3 +13,62 @@ export function getNewSongList(){
     url:'/personalized/newsong'
   })
 }
+// 获取歌曲地址
+export function getMusicUrl(id) {
+  return request({
+    url: '/song/url/song',
+    params: { id: id }
+  })
+}
+// 获取音乐详情
+export function getMusicDetail(id) {
+  return request({
+    url: '/song/detail/song',
+    params: { ids: id }
+  })
+}
+//获取专辑内容  歌曲的封面要通过专辑内容拿到
+// export function getAlbum(id) {   
+//   return request({
+//     url: '/album/album',
+//     params: { id: id }
+//   })
+// }
+
+
+// 排行榜
+export function getMusicTopList(params) {
+  return request({
+    url: '/top/list',
+    params
+  })
+}
+
+// 热门搜索
+export function getSearchHot() {
+  return request({
+    url: '/search/hot'
+  })
+}
+// 搜索多重匹配
+export function getSearchMultimatch(params) {
+  return request({
+    url: '/search/multimatch',
+    params
+  })
+}
+// 搜索接口
+// /search?keywords= 海阔天空
+export function getSearchMusic(params) {
+  return request({
+    url: '/search',
+    params
+  })
+}
+// 获取歌单详情
+export function getPlaylistDetail(params) {
+  return request({
+    url: '/playlist/detail',
+    params
+  })
+}
