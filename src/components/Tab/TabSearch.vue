@@ -2,7 +2,7 @@
   <div>
     <searchBar :keyword="keyword" />
     <searchHot/>
-    <searchResult/>
+    <searchResult v-if="isShowSongList" :song-list="songList"  />
   </div>
 </template>
 
@@ -28,8 +28,8 @@ import { getSearchMultimatch, getSearchMusic } from '@/api/api.js'
       searchMusic(params){
         this.keyword = params.keywords
         Promise.all([getSearchMusic(params),getSearchMultimatch(params)]).then(res =>{
-          console.log(res);
-          
+          this.songList = res[0].result.songs
+          this.isShowSongList = true
         })
       }
     }
