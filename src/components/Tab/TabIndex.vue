@@ -41,7 +41,7 @@
 
 <script>
 import {Toast} from 'vant'
-import SongsList from '../SongList/index'
+import SongsList from '../SongList/index'  
   export default {
     components:{
       SongsList
