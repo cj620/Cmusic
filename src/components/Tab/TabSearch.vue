@@ -1,12 +1,15 @@
 <template>
   <div>
-seach
+<searchBar />
   </div>
 </template>
 
 <script>
+import searchBar from '@/components/Tab/components/searchBar/index'
   export default {
-    
+    components:{
+      searchBar
+    }
   }
 </script>
 
