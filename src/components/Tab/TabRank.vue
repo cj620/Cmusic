@@ -102,7 +102,7 @@ import { getMusicTopList } from '@/api/api'
 
       > div:nth-of-type(2) {
         padding-top: 8px;
-        .news_txt_top {
+        .news-txt-top {
           font-size: 17px;
           overflow: hidden;
           text-overflow: ellipsis;

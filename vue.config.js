@@ -9,6 +9,5 @@ module.exports = {
       }
     }
   },
-  // 将构建好的文件输出到哪里
-  outputDir: 'dist'
+  publicPath: './'
 }
