@@ -1,5 +1,5 @@
 <template>
-<div class="search">
+<div class="search-bar">
       <!-- 阻止冒泡 -->
   <form @submit.prevent="onSubmit">
     <div class="inputcover">
