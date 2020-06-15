@@ -34,7 +34,7 @@
           最新音乐
         </div>
       </div>
-      <SongsList :song-list=$store.getters.newSongList />
+      <SongsList :song-list="songList" />
     </div>
   </div>
 </template>
@@ -42,13 +42,15 @@
 <script>
 import {Toast} from 'vant'
 import SongsList from '../SongList/index'  
+import {getRemdSongList,getNewSongList} from '@/api/api'
   export default {
     components:{
       SongsList
     },
     data() {
       return {
-        remdList:[]
+        remdList:[],
+        songList:[]
       }
     },
     mounted(){
@@ -81,7 +83,10 @@ import SongsList from '../SongList/index'
       // console.log(this.$store.state.remdList);
       // this.remdList = this.$store.state.remdList  //传入组件
       
-      
+      getNewSongList().then(res =>{
+        this.songList = res.result
+        
+      })
       
     }
   }

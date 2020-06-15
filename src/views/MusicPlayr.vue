@@ -159,7 +159,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
     justify-content: center;
     align-items: center;
     .song-pic{
-      padding-left: 20%;
+      padding-left: 25%;
       > img{
         width: 70%;
         height: 50%;
@@ -184,7 +184,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       height: 100%;
       overflow: hidden;
       .song-lyric{
-        color: wheat;
+        color: white;
         flex-wrap: wrap;
       }
     }
@@ -206,7 +206,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       display: flex;
       // background-color: pink; 
       align-items: center;
-      padding-left: 13%;
+      padding-left: 10%;
       .left1{
         transform: rotate(180deg);
       }
