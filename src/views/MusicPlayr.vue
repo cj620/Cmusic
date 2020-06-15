@@ -19,8 +19,21 @@
       </div>
 <!-- 歌词显示 -->
     <div class="song-lrc" @click="changeMid" v-show="lyricShow?true:false">
-      <div class="song-lyric" v-if="lyric">
-        {{lyric}}
+      <div class="song-lyric" v-if="currentLyric">
+        <!-- {{currentLyric}} -->
+
+  <div class="lyric-wrapper" ref="lyricList" :data="currentLyric && currentLyric.lines">  
+  <div>  
+    <div class="lyric">  
+      <p v-for="(line,index) in currentLyric.lines" ref="lyricLine"  :key="index"  
+         class="text">{{line.txt}}</p>  
+    </div>  
+  </div>  
+</div> 
+
+
+
+
       </div>
       <div class="no-lyric" v-else>没有找到歌词</div>
     </div>
@@ -63,6 +76,7 @@
 
 <script>
 import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
+import Lyric from 'lyric-parser'
   export default {
     data() {
       return {
@@ -74,7 +88,9 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
         name: ''
        },
        lyricShow:false,
-       lyric:"",
+       lyric:'',
+       currentLyric:'',
+       currentLineNum:''
       }
     },
     created(){
@@ -92,6 +108,10 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       })
       await getMusicLyric(this.musicId).then(res =>{
         this.lyric = res.lrc.lyric
+        // this.currentLyric = new Lyric(lyric, this.handleLyric)
+        this.currentLyric = new Lyric(this.lyric, this.handleLyric)
+        console.log(new Lyric(this.lyric, this.handleLyric));
+        
       })
       }
       ,
@@ -103,10 +123,23 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
           this.$refs.setAudio.play()
         } else {
           this.$refs.setAudio.pause()
-          this.$refs.setSong.style.animationPlayState = 'paused'
         }
         
       },
+      // 歌词处理
+      handleLyric({lineNum, txt}) {
+        console.log("----");
+        
+      // 回调事件包含两个参数 lineNum，当前play()事件的歌词索引，以及歌词文本 
+	     this.currentLineNum = lineNum
+	   // 调用scrollToElement方法，让其跳转当前行数-5的位置，时刻保持歌词居中显示
+	     if (lineNum > 5) {
+	     let lineEl = this.$refs.lyricLine[lineNum - 5]
+	     this.$refs.lyricList.scrollToElement(lineEl, 1000)
+	   } else {
+	     this.$refs.lyricList.scrollTo(0, 0, 1000)
+	   }
+    }
 
     // handleSong() {
     //   this.$nextTick(() => {
@@ -202,6 +235,9 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       .song-lyric{
         color: white;
         flex-wrap: wrap;
+        .lyric-wrapper{
+          text-align: center;
+        }
       }
       .no-lyric{
         text-align: center;
