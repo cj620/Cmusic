@@ -19,9 +19,10 @@
       </div>
 <!-- 歌词显示 -->
     <div class="song-lrc" @click="changeMid" v-show="lyricShow?true:false">
-      <div class="song-lyric">
+      <div class="song-lyric" v-if="lyric">
         {{lyric}}
       </div>
+      <div class="no-lyric" v-else>没有找到歌词</div>
     </div>
 
     </div>
@@ -29,11 +30,16 @@
     <div class="song-footer">
       <!-- <van-progress :percentage="50" inactive stroke-width="5"  /> -->
       <div class="song-ct">
-      <div class="left">
-        <van-icon name="play-circle-o" class="left1" size="70" color=""/>
-      </div>
-      <van-icon name="pause-circle-o" class="mid" size="70"/>
-      <van-icon name="play-circle-o" class="right" size="70"/>
+      <!-- <van-icon name="play-circle-o" class="play" size="70" color="white" @click="playBtn" v-if="play"/> -->
+      <van-icon name="arrow-left" class="left" size="70" color="white"/>
+      <van-icon name="circle" class="mid" size="70" color="white" @click="playBtn" ref="setSong" v-show="!playBtnShow"/>
+      <van-icon name="arrow" class="right" size="70" color="white"/>
+    <!-- <div class="left"></div>
+    <div class="mid"></div>
+    <div class="right"></div> -->
+
+
+
       </div>
     </div>
 
@@ -68,7 +74,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
         name: ''
        },
        lyricShow:false,
-       lyric:""
+       lyric:"",
       }
     },
     created(){
@@ -91,7 +97,16 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       ,
       changeMid(){
         this.lyricShow = !this.lyricShow
-      }
+      },
+      playBtn(){
+        if (this.$refs.setAudio.paused) {
+          this.$refs.setAudio.play()
+        } else {
+          this.$refs.setAudio.pause()
+          this.$refs.setSong.style.animationPlayState = 'paused'
+        }
+        
+      },
 
     // handleSong() {
     //   this.$nextTick(() => {
@@ -105,9 +120,9 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
     //       this.$refs.setAudio.pause()
     //     }
     //   }
-
     //   );
-    // }      
+    // }   
+
     }
   }
 </script>
@@ -171,7 +186,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
         transform: rotate(0deg) scale(1);
       }
       50%{
-        transform: rotate(180deg) scale(1);
+        transform: rotate(180deg) scale(1.3);
       }
       100% {
         transform: rotate(360deg) scale(1);
@@ -183,9 +198,15 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       width: 100%;
       height: 100%;
       overflow: hidden;
+      position: relative;
       .song-lyric{
         color: white;
         flex-wrap: wrap;
+      }
+      .no-lyric{
+        text-align: center;
+        line-height: 500px;
+        color: white;
       }
     }
   }
@@ -204,14 +225,15 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
       width: 90%;
       height: 100%;
       display: flex;
-      // background-color: pink; 
       align-items: center;
-      padding-left: 10%;
-      .left1{
-        transform: rotate(180deg);
-      }
+      padding-left: 12%;
       .left,.mid,.right{
         flex: 1;
+      }
+      .play{
+        position: absolute;
+        left: 41%;
+        top: 35%;
       }
     }
   }
