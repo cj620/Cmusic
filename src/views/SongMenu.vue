@@ -1,7 +1,7 @@
 <template>
   <div class="song-menu" >
     <div class="sm-head">
-      <div class="sm-bg" />
+      <div class="sm-bg" ref="smbg"/>
 
       <div class="sm-head-l">
         <div>歌单</div>
@@ -93,8 +93,10 @@ export default {
       this.songInfo = res.playlist
       // console.log(res.playlist.tags);
       // console.log(this.songInfo.creator.avatarUrl);
+      
     })
-  },
+    
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -109,7 +111,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 1;
-  background: url("https://p1.music.126.net/CuAQHM8kOXvwFG5gqg8gEw==/109951164625116636.jpg?imageView=1&type=webp&thumbnail=252x0");
+  // background: url("https://p1.music.126.net/CuAQHM8kOXvwFG5gqg8gEw==/109951164625116636.jpg?imageView=1&type=webp&thumbnail=252x0");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;

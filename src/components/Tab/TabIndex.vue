@@ -76,7 +76,7 @@ import SongsList from '../SongList/index'
           forbidClick: true,
           // 禁用背景点击
           loadingType: 'spinner'
-        });
+        }); 
       })
       // console.log(this.$store.state.remdList);
       // this.remdList = this.$store.state.remdList  //传入组件
