@@ -93,7 +93,6 @@ export default {
       this.songInfo = res.playlist
       // console.log(res.playlist.tags);
       // console.log(this.songInfo.creator.avatarUrl);
-      
     })
     
   }

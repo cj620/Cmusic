@@ -14,9 +14,16 @@
       </div>
     <!-- 中部 -->
     <div class="song-mid">
-      <div class="song-pic">
+      <div class="song-pic" @click="changeMid" v-show="lyricShow?false:true">
         <img :src="`${songInfo.picUrl}`" >
       </div>
+<!-- 歌词显示 -->
+    <div class="song-lrc" @click="changeMid" v-show="lyricShow?true:false">
+      <div class="song-lyric">
+        {{lyric}}
+      </div>
+    </div>
+
     </div>
     <!-- 底部 -->
     <div class="song-footer">
@@ -49,7 +56,7 @@
 </template>
 
 <script>
-import { getMusicDetail ,getMusicUrl} from '@/api/api'
+import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
   export default {
     data() {
       return {
@@ -59,7 +66,9 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
         songInfo: {
         picUrl: '',
         name: ''
-      },
+       },
+       lyricShow:false,
+       lyric:""
       }
     },
     created(){
@@ -71,13 +80,19 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
       // console.log(getMusicUrl(this.musicId));
       await getMusicUrl(this.musicId).then(res=>this.musicUrl=res.data[0].url)  //得到歌曲地址
       await getMusicDetail(this.musicId).then(res => {
-        // getPageTitle(res.songs[0].name, res.songs[0].ar[0].name)
         this.songInfo = res.songs[0].al;
         // console.log(this.songInfo);
-        
         // console.log(res);     
-      });
-      },
+      })
+      await getMusicLyric(this.musicId).then(res =>{
+        this.lyric = res.lrc.lyric
+      })
+      }
+      ,
+      changeMid(){
+        this.lyricShow = !this.lyricShow
+      }
+
     // handleSong() {
     //   this.$nextTick(() => {
     //     if (this.$refs.setAudio.paused) {
@@ -94,7 +109,6 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
     //   );
     // }      
     }
-
   }
 </script>
 
@@ -120,7 +134,7 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
   // 头部
   .song-head{
     position: fixed;
-    top: 10%;
+    top: 7%;
     left: 50%;
     width: 100%;
     height: 20%;
@@ -136,27 +150,43 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
   //中部
   .song-mid{
     position: fixed;
-    top: 50%;
+    top: 45%;
     left: 50%;
+    height: 60%;
+    width: 100%;
     transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .song-pic{
+      padding-left: 20%;
       > img{
-        width: 100%;
-        height: 100%;
+        width: 70%;
+        height: 50%;
         border-radius: 50%;
         animation: pop 4s infinite linear;
       }
       @keyframes pop {
       0% {
-        transform: rotate(0deg) scale(0.8);
+        transform: rotate(0deg) scale(1);
       }
       50%{
-        transform: rotate(180deg) scale(1.3);
+        transform: rotate(180deg) scale(1);
       }
       100% {
-        transform: rotate(360deg) scale(0.8);
+        transform: rotate(360deg) scale(1);
       }
     }
+    }
+
+    .song-lrc{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .song-lyric{
+        color: wheat;
+        flex-wrap: wrap;
+      }
     }
   }
   //尾部
@@ -176,7 +206,7 @@ import { getMusicDetail ,getMusicUrl} from '@/api/api'
       display: flex;
       // background-color: pink; 
       align-items: center;
-      padding-left: 10%;
+      padding-left: 13%;
       .left1{
         transform: rotate(180deg);
       }

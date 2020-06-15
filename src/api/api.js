@@ -72,3 +72,10 @@ export function getPlaylistDetail(params) {
     params
   })
 }
+//获取歌词
+export function getMusicLyric(id) {
+  return request({
+    url: '/lyric/lyric',
+    params: { id: id }
+  })
+}
