@@ -139,7 +139,8 @@ import demoPic from '@/components/Player/demoPic'
     font-size: 7vw;
     overflow: hidden;
 	  text-overflow:ellipsis;
-	  white-space:nowrap
+    white-space:nowrap;
+    z-index: 5;
   }
   .content{
     position: fixed;
@@ -152,6 +153,7 @@ import demoPic from '@/components/Player/demoPic'
   .bottom{
     position: fixed;
     bottom: 0;
+    z-index: 5;
   }
 }
  

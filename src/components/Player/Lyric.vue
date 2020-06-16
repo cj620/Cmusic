@@ -83,7 +83,6 @@ export default {
   }
   .lyric-list{
     transition: all 1s;
-    
   }
   p {
     padding:10px;
