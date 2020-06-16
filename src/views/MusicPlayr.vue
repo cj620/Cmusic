@@ -6,7 +6,12 @@
       class="song-bg"
       :style="{backgroundImage:`url(${songInfo.picUrl})`}"
     />
-    <Lyric :lyric="lyric" :title="songInfo.name" :currentTime="currentTime"/>
+    <!-- 头部 -->
+    <div class="song-title">
+      {{songInfo.name}}
+    </div>
+
+    <Lyric :lyric="lyric" :currentTime="currentTime"/>
     <ControllBtn @stop="change" @prev='prevFn' :isStop='isStop'/>
 
   <audio :src="musicUrl" autoplay ref='audio'></audio>
@@ -107,6 +112,18 @@ import ControllBtn from '@/components/Player/ControllBtn'
     transition: opacity 0.3s linear;
     z-index: -1;
     filter: blur(16px);
+  }
+  .song-title{
+    height: 10vh;
+    width: 100vw;
+    padding: 0 5vh;
+    text-align: center;
+    line-height: 10vh;
+    color: burlywood;
+    font-size: 7vw;
+    overflow: hidden;
+	  text-overflow:ellipsis;
+	  white-space:nowrap
   }
 }
   // 头部

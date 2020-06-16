@@ -1,6 +1,5 @@
 <template>
   <div class='lyric-box'>
-    <div class="til">{{title}}</div>
     <div class="lyric">
       <div
         class="lyric-list"
@@ -21,7 +20,7 @@
 // @ is an alias to /src
 export default {
   name: "Lyric",
-  props: ["lyric", "title", "currentTime"],
+  props: ["lyric", "currentTime"],
   data() {
     return {
       // lyricAry:[]
@@ -75,15 +74,11 @@ export default {
   color: #fff;
   position: relative;
   font-size: 17px;
-  height: 48vh;
+  height: 70vh;
   overflow: hidden;
   text-align: center;
-  .til {
-    height: 6vh;
-    padding-top: 2vh;
-  }
   .lyric {
-    height: 40vh;
+    height: 70vh;
     color: #b3b0b0;
     overflow: hidden;
   }
