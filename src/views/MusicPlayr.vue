@@ -86,10 +86,11 @@ import demoPic from '@/components/Player/demoPic'
       this.isStop = state;
       if(!state){
         this.$refs.audio.play()
+        this.stopPop = false
         this.updateTime();
       }else{
         this.$refs.audio.pause();
-        this.stopPop =!this.stopPop
+        this.stopPop =true
         clearInterval(this.timer)
       }
     },

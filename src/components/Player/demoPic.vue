@@ -11,13 +11,23 @@
       img:"",
       stopPop:''
     },
+    data() {
+      return {
+        index:''
+      }
+    },
+    created(){
+       setInterval(()=>{
+        this.index++
+      },30)
+    },
     watch:{
-      stopPop:{
+      index:{
         handler(newName, oldName){
-          if(newName ==true){
-            this.$refs.stopImg.style.animationPlayState = 'running'
-          }else{
+          if(this.stopPop){
             this.$refs.stopImg.style.animationPlayState = 'paused'
+          }else{
+            this.$refs.stopImg.style.animationPlayState = 'running'
           }
         },
         // immediate: true
