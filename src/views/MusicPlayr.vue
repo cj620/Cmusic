@@ -144,8 +144,10 @@ import demoPic from '@/components/Player/demoPic'
   .content{
     position: fixed;
     top: 10vh;
-    left: 18vw;
     height: 50vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
   }
   .bottom{
     position: fixed;

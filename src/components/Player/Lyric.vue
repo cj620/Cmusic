@@ -72,7 +72,6 @@ export default {
 <style lang="scss">
 .lyric-box {
   color: #fff;
-  position: relative;
   font-size: 17px;
   height: 70vh;
   overflow: hidden;
@@ -84,6 +83,7 @@ export default {
   }
   .lyric-list{
     transition: all 1s;
+    
   }
   p {
     padding:10px;
