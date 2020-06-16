@@ -51,12 +51,15 @@ export default {
   },
   watch: {
     activeIndex(cur) {
-      if(cur<5)return;
-      let el = this.$refs.p[cur - 1];
+      if(cur<6)return;
+      let el = this.$refs.p[cur - 1];      
       if (el) {
-        let obj = getComputedStyle(el);
-        this.moveY -= parseFloat(obj.height) + parseFloat(obj.paddingTop) * 2;
-        // console.log(this.moveY);
+        let obj = getComputedStyle(el);   //这是每行歌词的对象
+        this.moveY -= parseFloat(obj.height) //用它的高来作为偏移量
+        console.log(this.moveY);
+        // console.log(obj);
+        
+        
       }
     },
     lyricAry(){
@@ -83,10 +86,10 @@ export default {
     overflow: hidden;
   }
   .lyric-list{
-    transition: all 0.2s;
+    transition: all 1s;
   }
   p {
-    padding: 10px;
+    padding:10px;
   }
   p.active {
     color: #fff;

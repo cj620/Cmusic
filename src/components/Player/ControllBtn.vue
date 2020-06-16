@@ -44,7 +44,7 @@ export default {
 </script>
 <style lang="scss">
   .bot-btn-box{
-    height: 21vh;
+    height: 20vh;
     width: 100vw;
     display: flex;
     justify-content: center;
