@@ -10,22 +10,28 @@
     <div class="song-title">
       {{songInfo.name}}
     </div>
-
-    <Lyric :lyric="lyric" :currentTime="currentTime"/>
-    <ControllBtn @stop="change" @prev='prevFn' :isStop='isStop'/>
-
-  <audio :src="musicUrl" autoplay ref='audio'></audio>
+<!-- 中部 -->
+    <div @click="getLyric" class="content">
+      <Lyric :lyric="lyric" :currentTime="currentTime"  v-show="lyricShow"/>
+      <demoPic :img="songInfo.picUrl" v-show="!lyricShow"  :stopPop="stopPop"/>
+    </div>
+    <!-- 底部控制条 -->
+ <div class="bottom">
+   <controllBtn @stop="change" @prev='prevFn' :isStop='isStop'/>
+ </div>
+  <audio :src="musicUrl" autoplay ref='audio' v-show="false"></audio>
     </div>
 </template>
-
 <script>
 import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
 import Lyric from '@/components/Player/Lyric'
-import ControllBtn from '@/components/Player/ControllBtn'
+import controllBtn from '@/components/Player/ControllBtn'
+import demoPic from '@/components/Player/demoPic'
   export default {
     components:{
       Lyric,
-      ControllBtn
+      controllBtn,
+      demoPic
     },
     data() {
       return {
@@ -37,7 +43,8 @@ import ControllBtn from '@/components/Player/ControllBtn'
         timer:null ,
         isStop:false,
         idIndex:0,
-
+        lyricShow:false,
+        stopPop:false,
         songInfo: {
         picUrl: '',
         name: ''
@@ -49,6 +56,8 @@ import ControllBtn from '@/components/Player/ControllBtn'
       this.$nextTick(
         this.updateTime()
       )
+
+      
     },
     beforeDestroy(){
       clearInterval(this.timer)
@@ -80,6 +89,7 @@ import ControllBtn from '@/components/Player/ControllBtn'
         this.updateTime();
       }else{
         this.$refs.audio.pause();
+        this.stopPop =!this.stopPop
         clearInterval(this.timer)
       }
     },
@@ -88,8 +98,11 @@ import ControllBtn from '@/components/Player/ControllBtn'
           this.currentTime = this.$refs.audio.currentTime;    
         // this.currentTime = this.$refs.audio.currentTime;        
       }, 10);
+    },
+    getLyric(){
+      this.lyricShow = !this.lyricShow
+      // console.log("-----");
     }
-      
     }
   }
 </script>
@@ -114,6 +127,8 @@ import ControllBtn from '@/components/Player/ControllBtn'
     filter: blur(16px);
   }
   .song-title{
+    position: fixed;
+    top: 0;
     height: 10vh;
     width: 100vw;
     padding: 0 5vh;
@@ -125,58 +140,16 @@ import ControllBtn from '@/components/Player/ControllBtn'
 	  text-overflow:ellipsis;
 	  white-space:nowrap
   }
+  .content{
+    position: fixed;
+    top: 10vh;
+    left: 18vw;
+    height: 50vh;
+  }
+  .bottom{
+    position: fixed;
+    bottom: 0;
+  }
 }
-  // 头部
-  
-
-// .music-playr {
-//   .song-bg {
-//     position: fixed;
-//     left: 0;
-//     right: 0;
-//     top: -50px;
-//     height: 100%;
-//     background-color: #161824;
-//     background-position: 50%;
-//     background-repeat: no-repeat;
-//     background-size: auto 100%;
-//     transform-origin: center top;
-//     transform: scale(1.5);
-//     transition: opacity 0.3s linear;
-//     z-index: -1;
-//     filter: blur(16px);
-//   }
-//   .song-set {
-//     position: fixed;
-//     left: 50%;
-//     top: 50%;
-//     transform: translate(-50%, -50%);
-//     i {
-//       position: absolute;
-//       top: 50%;
-//       font-size: 1.33333rem;
-//       z-index: 1;
-//       left: 50%;
-//       transform: translate(-50%, -50%);
-//       color: #fff;
-//     }
-//     .song-set-btn {
-//       animation: circle 3s infinite linear;
-//       img {
-//         display: block;
-//         margin: 0px auto;
-//         width: 200px;
-//         border-radius: 50%;
-//       }
-//     }
-//     @keyframes circle {
-//       0% {
-//         transform: rotate(0deg);
-//       }
-//       100% {
-//         transform: rotate(360deg);
-//       }
-//     }
-//   }
-// }
+ 
 </style>

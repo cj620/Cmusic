@@ -56,10 +56,7 @@ export default {
       if (el) {
         let obj = getComputedStyle(el);   //这是每行歌词的对象
         this.moveY -= parseFloat(obj.height) //用它的高来作为偏移量
-        console.log(this.moveY);
-        // console.log(obj);
-        
-        
+        // console.log(this.moveY);
       }
     },
     lyricAry(){
