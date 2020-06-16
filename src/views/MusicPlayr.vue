@@ -6,100 +6,45 @@
       class="song-bg"
       :style="{backgroundImage:`url(${songInfo.picUrl})`}"
     />
-    <!-- 头部 -->
-      <div class="song-head">
-        <div class="song-title">
-          {{songInfo.name}}
-        </div>
-      </div>
-    <!-- 中部 -->
-    <div class="song-mid">
-      <div class="song-pic" @click="changeMid" v-show="lyricShow?false:true">
-        <img :src="`${songInfo.picUrl}`" >
-      </div>
-<!-- 歌词显示 -->
-    <div class="song-lrc" @click="changeMid" v-show="lyricShow?true:false">
-      <div class="song-lyric" v-if="currentLyric">
-        <!-- {{currentLyric}} -->
+    <Lyric :lyric="lyric" :title="songInfo.name" :currentTime="currentTime"/>
+    <ControllBtn @stop="change" @prev='prevFn' :isStop='isStop'/>
 
-  <div class="lyric-wrapper" ref="lyricList" :data="currentLyric && currentLyric.lines">  
-  <div>  
-    <div class="lyric">  
-      <p v-for="(line,index) in currentLyric.lines" ref="lyricLine"  :key="index"  
-         class="text">{{line.txt}}</p>  
-    </div>  
-  </div>  
-</div> 
-
-
-
-
-      </div>
-      <div class="no-lyric" v-else>没有找到歌词</div>
+  <audio :src="musicUrl" autoplay ref='audio'></audio>
     </div>
-
-    </div>
-    <!-- 底部 -->
-    <div class="song-footer">
-      <!-- <van-progress :percentage="50" inactive stroke-width="5"  /> -->
-      <div class="song-ct">
-      <!-- <van-icon name="play-circle-o" class="play" size="70" color="white" @click="playBtn" v-if="play"/> -->
-      <van-icon name="arrow-left" class="left" size="70" color="white"/>
-      <van-icon name="circle" class="mid" size="70" color="white" @click="playBtn" ref="setSong" v-show="!playBtnShow"/>
-      <van-icon name="arrow" class="right" size="70" color="white"/>
-    <!-- <div class="left"></div>
-    <div class="mid"></div>
-    <div class="right"></div> -->
-
-
-
-      </div>
-    </div>
-
-  
-    <!-- <div class="song-set" @click="handleSong">
-      <van-icon v-show="playBtnShow" name="play-circle-o" />
-      <div ref="setSong" class="song-set-btn">
-        <img :src="songInfo.picUrl" :alt="songInfo.name">
-      </div>
-    </div> -->
-    <audio
-      v-show="false"
-      ref="setAudio"
-      class="audio"
-      :src="musicUrl"
-      controls
-      autoplay
-    >您的浏览器太老了不支持audio 标签</audio>
-  </div> 
 </template>
 
 <script>
 import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
-import Lyric from 'lyric-parser'
+import Lyric from '@/components/Player/Lyric'
+import ControllBtn from '@/components/Player/ControllBtn'
   export default {
+    components:{
+      Lyric,
+      ControllBtn
+    },
     data() {
       return {
         musicId: this.$route.query.id,  //当前点击的歌曲id
+        lyric:'',
         musicUrl:'',
-        playBtnShow: false,    //默认不显示
+        isStop:true,
+        currentTime:0,
+        timer:null ,
+        isStop:false,
+        idIndex:0,
+
         songInfo: {
         picUrl: '',
         name: ''
-       },
-       lyricShow:false,
-       lyric:'',
-       currentLyric:'',
-       currentLineNum:''
+       }
       }
     },
     created(){
       this.init()
+      this.updateTime()
     },
     methods:{
       async init(){
-      //  console.log(getAlbum(this.musicId));
-      // console.log(getMusicUrl(this.musicId));
       await getMusicUrl(this.musicId).then(res=>this.musicUrl=res.data[0].url)  //得到歌曲地址
       await getMusicDetail(this.musicId).then(res => {
         this.songInfo = res.songs[0].al;
@@ -108,54 +53,33 @@ import Lyric from 'lyric-parser'
       })
       await getMusicLyric(this.musicId).then(res =>{
         this.lyric = res.lrc.lyric
-        // this.currentLyric = new Lyric(lyric, this.handleLyric)
-        this.currentLyric = new Lyric(this.lyric, this.handleLyric)
-        console.log(new Lyric(this.lyric, this.handleLyric));
-        
       })
+      },
+      prevFn(){
+      this.idIndex = (this.idIndex - 1) < 0 ? this.idList.length-1 : this.idIndex - 1;
+      this.getInfo(this.idList[this.idIndex]);
+    },
+    // nextFn(){
+    //   this.idIndex = (this.idIndex + 1) >= this.idList.length ? 0 : this.idIndex + 1;
+    //   this.getInfo(this.idList[this.idIndex]);
+    // },
+    change(state){
+      this.isStop = state;
+      if(!state){
+        this.$refs.audio.play()
+        this.updateTime();
+      }else{
+        this.$refs.audio.pause();
+        clearInterval(this.timer)
       }
-      ,
-      changeMid(){
-        this.lyricShow = !this.lyricShow
-      },
-      playBtn(){
-        if (this.$refs.setAudio.paused) {
-          this.$refs.setAudio.play()
-        } else {
-          this.$refs.setAudio.pause()
-        }
-        
-      },
-      // 歌词处理
-      handleLyric({lineNum, txt}) {
-        console.log("----");
-        
-      // 回调事件包含两个参数 lineNum，当前play()事件的歌词索引，以及歌词文本 
-	     this.currentLineNum = lineNum
-	   // 调用scrollToElement方法，让其跳转当前行数-5的位置，时刻保持歌词居中显示
-	     if (lineNum > 5) {
-	     let lineEl = this.$refs.lyricLine[lineNum - 5]
-	     this.$refs.lyricList.scrollToElement(lineEl, 1000)
-	   } else {
-	     this.$refs.lyricList.scrollTo(0, 0, 1000)
-	   }
+    },
+    updateTime(){
+      this.timer = setInterval(() => {
+          // this.currentTime = this.$refs.audio.currentTime;    
+        // this.currentTime = this.$refs.audio.currentTime;        
+      }, 10);
     }
-
-    // handleSong() {
-    //   this.$nextTick(() => {
-    //     if (this.$refs.setAudio.paused) {
-    //       this.$refs.setSong.style.animationPlayState = 'running'
-    //       this.playBtnShow = false
-    //       this.$refs.setAudio.play()
-    //     } else {
-    //       this.$refs.setSong.style.animationPlayState = 'paused'
-    //       this.playBtnShow = true
-    //       this.$refs.setAudio.pause()
-    //     }
-    //   }
-    //   );
-    // }   
-
+      
     }
   }
 </script>
@@ -179,102 +103,9 @@ import Lyric from 'lyric-parser'
     z-index: -1;
     filter: blur(16px);
   }
-  // 头部
-  .song-head{
-    position: fixed;
-    top: 7%;
-    left: 50%;
-    width: 100%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: whitesmoke;
-    transform: translate(-50%, -50%);
-    .song-title{
-      font-size: 130%;
-    }
-  }
-  //中部
-  .song-mid{
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    height: 60%;
-    width: 100%;
-    transform: translate(-50%,-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .song-pic{
-      padding-left: 25%;
-      > img{
-        width: 70%;
-        height: 50%;
-        border-radius: 50%;
-        animation: pop 4s infinite linear;
-      }
-      @keyframes pop {
-      0% {
-        transform: rotate(0deg) scale(1);
-      }
-      50%{
-        transform: rotate(180deg) scale(1.3);
-      }
-      100% {
-        transform: rotate(360deg) scale(1);
-      }
-    }
-    }
-
-    .song-lrc{
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      position: relative;
-      .song-lyric{
-        color: white;
-        flex-wrap: wrap;
-        .lyric-wrapper{
-          text-align: center;
-        }
-      }
-      .no-lyric{
-        text-align: center;
-        line-height: 500px;
-        color: white;
-      }
-    }
-  }
-  //尾部
-  .song-footer{
-    position: fixed;
-    bottom: 0;
-    // background-color: pink;
-    width: 100%;
-    height: 33.3%;
-    .song-ct{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      width: 90%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      padding-left: 12%;
-      .left,.mid,.right{
-        flex: 1;
-      }
-      .play{
-        position: absolute;
-        left: 41%;
-        top: 35%;
-      }
-    }
-  }
-
 }
+  // 头部
+  
 
 // .music-playr {
 //   .song-bg {
