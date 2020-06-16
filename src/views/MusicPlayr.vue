@@ -41,7 +41,12 @@ import ControllBtn from '@/components/Player/ControllBtn'
     },
     created(){
       this.init()
-      this.updateTime()
+      this.$nextTick(
+        this.updateTime()
+      )
+    },
+    beforeDestroy(){
+      clearInterval(this.timer)
     },
     methods:{
       async init(){
@@ -75,7 +80,7 @@ import ControllBtn from '@/components/Player/ControllBtn'
     },
     updateTime(){
       this.timer = setInterval(() => {
-          // this.currentTime = this.$refs.audio.currentTime;    
+          this.currentTime = this.$refs.audio.currentTime;    
         // this.currentTime = this.$refs.audio.currentTime;        
       }, 10);
     }
