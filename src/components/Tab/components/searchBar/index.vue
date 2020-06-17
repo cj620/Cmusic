@@ -2,7 +2,7 @@
 <div class="search-bar">
       <!-- 阻止冒泡 -->
   <form @submit.prevent="onSubmit">
-    <div class="inputcover">
+    <div class="inputcover" @click="onSubmit">
       <van-icon name="search" />
       <input type="text" v-model="text" placeholder="搜索歌曲、歌手、专辑">
       <label />

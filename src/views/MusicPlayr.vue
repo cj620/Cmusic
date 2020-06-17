@@ -18,7 +18,7 @@
     <!-- 进度条 -->
     <div class="time-line">
       <!-- <TimeLine :currentTime="currentTime" /> -->
-      <van-slider v-model="value" @change="onChange" />
+      <van-slider v-model="value" @change="onChange" active-color="#443e8f9d" button-size="10px" />
     </div>
     <!-- 底部控制条 -->
  <div class="bottom">
@@ -100,7 +100,7 @@ import { Slider , Toast } from 'vant'
           this.currentTime = this.$refs.audio.currentTime;  
           this.value = parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1   
               if(this.$refs.audio.currentTime == this.$refs.audio.duration){
-                    this.$refs.audio.currentTime = 0.1        //循环播放
+                    this.change       //循环播放
               }
       }, 10);
     },
@@ -145,7 +145,7 @@ import { Slider , Toast } from 'vant'
     padding: 0 5vh;
     text-align: center;
     line-height: 10vh;
-    color: burlywood;
+    color: #443e8f9d;
     font-size: 7vw;
     overflow: hidden;
 	  text-overflow:ellipsis;
