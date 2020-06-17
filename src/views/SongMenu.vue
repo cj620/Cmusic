@@ -130,7 +130,7 @@ export default {
     font-size: 12px;
     text-align: center;
     line-height: 18px;
-    background-color: rgba(217, 48, 48, 0.8);
+    background-color: #443e8f9d;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
   }

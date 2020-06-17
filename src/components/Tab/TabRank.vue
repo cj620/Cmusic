@@ -143,7 +143,7 @@ import { getMusicTopList } from '@/api/api'
     }
     li:nth-child(-n+3) {
       >div:nth-of-type(1) {
-        color: red;
+        color: #0e02be;
       }
     }
   }

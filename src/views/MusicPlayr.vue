@@ -68,6 +68,7 @@ import { Slider , Toast } from 'vant'
         }
       )
     },
+
     beforeDestroy(){
       clearInterval(this.timer)
     },
@@ -98,7 +99,9 @@ import { Slider , Toast } from 'vant'
       this.timer = setInterval(() => {
           this.currentTime = this.$refs.audio.currentTime;  
           this.value = parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1   
-        // this.currentTime = this.$refs.audio.currentTime;        
+              if(this.$refs.audio.currentTime == this.$refs.audio.duration){
+                    this.$refs.audio.currentTime = 0.1        //循环播放
+              }
       }, 10);
     },
     getLyric(){

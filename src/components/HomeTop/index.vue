@@ -2,11 +2,12 @@
 <div class="home-top">
 
   <div class="top">
-    <img src="./logo.svg" alt="logo">
+    <img src="./logo2.svg" alt="logo">
+    <div class="txt">Cmusic</div>
   </div>
   <div class="buttom">
     
- <van-tabs v-model="active" animated>
+ <van-tabs v-model="active" animated color="#443e8f9d">
      <van-tab v-for="value in tabName" :key="value.id" :title="value.title">
        <component :is="value.component" keep-alive />
      </van-tab>
@@ -43,14 +44,18 @@ import TabSearch from '@/components/Tab/TabSearch'
 .home-top{
   .top {
     height: 75px;
-    padding: 0 20px;
     display: flex;
-
     align-items: center;
-    background-color: #c4483b;
+    background-color: #443e8f9d;
+    .txt{
+      font-size: 10vw;
+      color: rgb(247, 172, 35);
+      margin-left: 4vw;
+    }
     > img {
-      width: 142px;
-      height: 26px;
+      width: 15vw;
+      max-width: 12vh;
+      margin-left: 22vw;
       overflow: hidden;
     }
   }

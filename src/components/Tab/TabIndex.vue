@@ -99,7 +99,7 @@ import {getRemdSongList,getNewSongList} from '@/api/api'
     > div{
     height: 18px;
       line-height: 18px;
-      border-left: 2px solid #c4483b;
+      border-left: 2px solid #443e8f9d;
       border-top: 2px solid transparent;
       padding-left: 10px;
       font-size: 16px;
@@ -146,7 +146,7 @@ import {getRemdSongList,getNewSongList} from '@/api/api'
     > div {
       height: 18px;
       line-height: 18px;
-      border-left: 2px solid #c4483b;
+      border-left: 2px solid #443e8f9d;
       border-top: 2px solid transparent;
       padding-left: 10px;
       font-size: 16px;
