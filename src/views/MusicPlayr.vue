@@ -16,7 +16,9 @@
       <demoPic :img="songInfo.picUrl" v-show="!lyricShow"  :stopPop="stopPop"/>
     </div>
     <!-- 进度条 -->
-    <!-- <TimeLine :currentTime="currentTime"/> -->
+    <div class="time-line">
+      <TimeLine :currentTime="currentTime" />
+    </div>
     <!-- 底部控制条 -->
  <div class="bottom">
    <controllBtn @stop="change"  :isStop='isStop'/>
@@ -159,6 +161,15 @@ import TimeLine from '@/components/Player/TimeLine'
     position: fixed;
     bottom: 0;
     z-index: 5;
+  }
+  .time-line{
+    position: fixed;
+    top: 75vh;
+    height: 10vh;
+    width: 100vw;
+    // background-color: pink;
+    display: flex;
+    align-items: center;
   }
 }
  
