@@ -17,7 +17,8 @@
     </div>
     <!-- 进度条 -->
     <div class="time-line">
-      <TimeLine :currentTime="currentTime" />
+      <!-- <TimeLine :currentTime="currentTime" /> -->
+      <van-slider v-model="value" @change="onChange" />
     </div>
     <!-- 底部控制条 -->
  <div class="bottom">
@@ -31,13 +32,14 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
 import Lyric from '@/components/Player/Lyric'
 import controllBtn from '@/components/Player/ControllBtn'
 import demoPic from '@/components/Player/demoPic'
-import TimeLine from '@/components/Player/TimeLine'
+import { Slider , Toast } from 'vant'
+// import TimeLine from '@/components/Player/TimeLine'
   export default {
     components:{
       Lyric,
       controllBtn,
       demoPic,
-      TimeLine
+      // TimeLine
     },
     data() {
       return {
@@ -51,9 +53,10 @@ import TimeLine from '@/components/Player/TimeLine'
         idIndex:0,
         lyricShow:false,
         stopPop:false,
+        value:1,
         songInfo: {
         picUrl: '',
-        name: ''
+        name: '',
        }
       }
     },
@@ -76,17 +79,9 @@ import TimeLine from '@/components/Player/TimeLine'
         // console.log(this.songInfo);   
       })
       await getMusicLyric(this.musicId).then(res =>{
-        this.lyric = res.lrc.lyric
+        this.lyric = res.lrc.lyric        
       })
       },
-    //   prevFn(){
-    //   this.idIndex = (this.idIndex - 1) < 0 ? this.idList.length-1 : this.idIndex - 1;
-    //   this.getInfo(this.idList[this.idIndex]);
-    // },
-    // nextFn(){
-    //   this.idIndex = (this.idIndex + 1) >= this.idList.length ? 0 : this.idIndex + 1;
-    //   this.getInfo(this.idList[this.idIndex]);
-    // },
     change(state){
       this.isStop = state;
       if(!state){
@@ -101,14 +96,21 @@ import TimeLine from '@/components/Player/TimeLine'
     },
     updateTime(){
       this.timer = setInterval(() => {
-          this.currentTime = this.$refs.audio.currentTime;    
+          this.currentTime = this.$refs.audio.currentTime;  
+          this.value = parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1   
         // this.currentTime = this.$refs.audio.currentTime;        
       }, 10);
     },
     getLyric(){
       this.lyricShow = !this.lyricShow
       // console.log("-----");
-    }
+    },
+    onChange(value) {
+      Toast('当前值：' + value);
+      console.log(parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1);  //
+      this.$refs.audio.currentTime = value*this.$refs.audio.duration/100
+      
+    },
     }
   }
 </script>
@@ -168,6 +170,7 @@ import TimeLine from '@/components/Player/TimeLine'
     // background-color: pink;
     display: flex;
     align-items: center;
+    z-index: 6;
   }
 }
  
