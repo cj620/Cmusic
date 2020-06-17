@@ -52,12 +52,12 @@
       animation:pop 4s linear infinite;
       @keyframes pop {
         0%{
-          transform: rotate(0deg) scale(1);
+          transform: rotate(0deg) scale(0.8);
         }
-        50%{transform: rotate(180deg) scale(1.2)
+        50%{transform: rotate(180deg) scale(1)
         }
         100%{
-          transform: rotate(360deg) scale(1)
+          transform: rotate(360deg) scale(0.8)
         }
       }
     }

@@ -15,9 +15,11 @@
       <Lyric :lyric="lyric" :currentTime="currentTime"  v-show="lyricShow"/>
       <demoPic :img="songInfo.picUrl" v-show="!lyricShow"  :stopPop="stopPop"/>
     </div>
+    <!-- 进度条 -->
+    <!-- <TimeLine :currentTime="currentTime"/> -->
     <!-- 底部控制条 -->
  <div class="bottom">
-   <controllBtn @stop="change" @prev='prevFn' :isStop='isStop'/>
+   <controllBtn @stop="change"  :isStop='isStop'/>
  </div>
   <audio :src="musicUrl" autoplay ref='audio' v-show="false"></audio>
     </div>
@@ -27,11 +29,13 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
 import Lyric from '@/components/Player/Lyric'
 import controllBtn from '@/components/Player/ControllBtn'
 import demoPic from '@/components/Player/demoPic'
+import TimeLine from '@/components/Player/TimeLine'
   export default {
     components:{
       Lyric,
       controllBtn,
-      demoPic
+      demoPic,
+      TimeLine
     },
     data() {
       return {
@@ -54,7 +58,9 @@ import demoPic from '@/components/Player/demoPic'
     created(){
       this.init()
       this.$nextTick(
-        this.updateTime()
+        ()=>{
+          this.updateTime()      
+        }
       )
 
       
@@ -67,17 +73,16 @@ import demoPic from '@/components/Player/demoPic'
       await getMusicUrl(this.musicId).then(res=>this.musicUrl=res.data[0].url)  //得到歌曲地址
       await getMusicDetail(this.musicId).then(res => {
         this.songInfo = res.songs[0].al;
-        // console.log(this.songInfo);
-        // console.log(res);     
+        // console.log(this.songInfo);   
       })
       await getMusicLyric(this.musicId).then(res =>{
         this.lyric = res.lrc.lyric
       })
       },
-      prevFn(){
-      this.idIndex = (this.idIndex - 1) < 0 ? this.idList.length-1 : this.idIndex - 1;
-      this.getInfo(this.idList[this.idIndex]);
-    },
+    //   prevFn(){
+    //   this.idIndex = (this.idIndex - 1) < 0 ? this.idList.length-1 : this.idIndex - 1;
+    //   this.getInfo(this.idList[this.idIndex]);
+    // },
     // nextFn(){
     //   this.idIndex = (this.idIndex + 1) >= this.idList.length ? 0 : this.idIndex + 1;
     //   this.getInfo(this.idList[this.idIndex]);

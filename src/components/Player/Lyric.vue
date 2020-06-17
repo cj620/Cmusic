@@ -34,7 +34,15 @@ export default {
       str.replace(/\[(\d+):(\d+)\.(\d+)\] *([^\n]+)/g, function(a, b, c, d,e) {
         // console.log(b, c);
         ary.push([b * 60 + c * 1 + d/1000, e]);
-      });
+      })
+      let lastTime = ary.pop()
+      if(typeof lastTime === "object"){
+        this.$store.state.lastTime = lastTime[0]
+        // console.log(this.$store.state.lastTime);
+        
+        }
+                      //上面可能还没加载完
+        
       
       return ary;
     },
@@ -55,9 +63,8 @@ export default {
       let el = this.$refs.p[cur - 1];      
       if (el) {
         let obj = getComputedStyle(el);   //这是每行歌词的对象
-        this.moveY -= parseFloat(obj.height) //用它的高来作为偏移量
-        // console.log(this.moveY);
-      }
+        this.moveY -= parseFloat(obj.height)?parseFloat(obj.height):-40 //用它的高来作为偏移量
+      }                                                                 //中部切换的时候，会导致偏移量丢失，暂时用40来替代
     },
     lyricAry(){
       this.moveY = 0;
