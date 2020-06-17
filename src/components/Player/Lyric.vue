@@ -59,7 +59,7 @@ export default {
   },
   watch: {
     activeIndex(cur) {
-      if(cur<6)return;
+      if(cur<5)return;
       let el = this.$refs.p[cur - 1];      
       if (el) {
         let obj = getComputedStyle(el);   //这是每行歌词的对象

@@ -64,8 +64,6 @@ import TimeLine from '@/components/Player/TimeLine'
           this.updateTime()      
         }
       )
-
-      
     },
     beforeDestroy(){
       clearInterval(this.timer)
@@ -159,7 +157,7 @@ import TimeLine from '@/components/Player/TimeLine'
   }
   .bottom{
     position: fixed;
-    bottom: 0;
+    top: 80vh;
     z-index: 5;
   }
   .time-line{
