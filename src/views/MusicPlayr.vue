@@ -100,7 +100,7 @@ import { Slider , Toast } from 'vant'
           this.currentTime = this.$refs.audio.currentTime;  
           this.value = parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1   
               if(this.$refs.audio.currentTime == this.$refs.audio.duration){
-                    this.change       //循环播放
+                    this.change()       //循环播放
               }
       }, 10);
     },

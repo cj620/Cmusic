@@ -3,7 +3,6 @@ import axios from 'axios'
 const service = axios.create({
   baseURL: "https://autumnfish.cn",  
   timeout: 5000 // request timeout
-
 });
 //请求拦截
 service.interceptors.request.use(
