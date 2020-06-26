@@ -5,7 +5,10 @@ const state = {
   newSongList: [],
   // 当前播放音乐的地址
   currentMusicUrl: '',
-  lastTime:''
+
+  lastTime:'',
+  //播放目录
+  trackIds:[]
 };
 
 export default state

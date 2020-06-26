@@ -8,6 +8,7 @@
     />
     <!-- 头部 -->
     <div class="song-title">
+      <div class="back" @click="playerBack"> <img src="../assets/back.svg" alt=""></div>
       {{songInfo.name}}
     </div>
 <!-- 中部 -->
@@ -22,7 +23,7 @@
     </div>
     <!-- 底部控制条 -->
  <div class="bottom">
-   <controllBtn @stop="change"  :isStop='isStop'/>
+   <controllBtn @stop="change"  :isStop='isStop' @next="nextSong" @prev="preSong" />
  </div>
   <audio :src="musicUrl" autoplay ref='audio' v-show="false"></audio>
     </div>
@@ -32,7 +33,7 @@ import { getMusicDetail ,getMusicUrl,getMusicLyric} from '@/api/api'
 import Lyric from '@/components/Player/Lyric'
 import controllBtn from '@/components/Player/ControllBtn'
 import demoPic from '@/components/Player/demoPic'
-import { Slider , Toast } from 'vant'
+import { Slider , Toast} from 'vant'
 // import TimeLine from '@/components/Player/TimeLine'
   export default {
     components:{
@@ -54,6 +55,7 @@ import { Slider , Toast } from 'vant'
         lyricShow:false,
         stopPop:false,
         value:1,
+        playCount:0,
         songInfo: {
         picUrl: '',
         name: '',
@@ -64,7 +66,8 @@ import { Slider , Toast } from 'vant'
       this.init()
       this.$nextTick(
         ()=>{
-          this.updateTime()      
+          this.updateTime()  
+          this.$refs.audio.play() 
         }
       )
     },
@@ -83,7 +86,7 @@ import { Slider , Toast } from 'vant'
         this.lyric = res.lrc.lyric        
       })
       },
-    change(state){
+    change(state){      
       this.isStop = state;
       if(!state){
         this.$refs.audio.play()
@@ -114,6 +117,30 @@ import { Slider , Toast } from 'vant'
       this.$refs.audio.currentTime = value*this.$refs.audio.duration/100
       
     },
+    playerBack(){
+      this.$router.go(-1)
+    },
+    nextSong(){
+      // console.log(this.$store.state.trackIds[this.playCount].id);
+      // getMusicUrl(this.$store.state.trackIds[0].id).then(res =>console.log(res.data[0].url))
+      this.playCount++
+      this.musicId = this.$store.state.trackIds[this.playCount].id
+      clearInterval(this.timer)
+      this.init()
+    },
+    preSong(){
+      // console.log("=====");
+      if(this.playCount<=0){
+        this.playCount =0
+      }else{
+        this.playCount--
+      this.musicId = this.$store.state.trackIds[this.playCount].id
+      clearInterval(this.timer)
+      this.init()
+      }
+      
+    }
+    
     }
   }
 </script>
@@ -151,6 +178,14 @@ import { Slider , Toast } from 'vant'
 	  text-overflow:ellipsis;
     white-space:nowrap;
     z-index: 5;
+    .back{
+      position: fixed;
+      left: 0;
+      >img{
+        width: 10vw;
+        margin-top: 4px;
+      }
+    }
   }
   .content{
     position: fixed;

@@ -85,6 +85,8 @@ import {getRemdSongList,getNewSongList} from '@/api/api'
       
       getNewSongList().then(res =>{
         this.songList = res.result
+        // console.log(res);
+        
         
       })
       

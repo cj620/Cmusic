@@ -53,6 +53,8 @@ import { getMusicTopList } from '@/api/api'
     }
       getMusicTopList(params).then(res=>{
         this.songList = res.playlist.tracks.slice(0,30)
+        // console.log(res.playlist.tracks);
+         this.$store.state.trackIds = res.playlist.tracks
         // console.log(this.songList[0])
         
       }

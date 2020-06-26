@@ -2,6 +2,7 @@
   <div class='lyric-box'>
     <div class="lyric">
       <div
+        v-if="lyric"
         class="lyric-list"
         :style="{transform:`translateY(${moveY}px)`}"
       >
@@ -12,6 +13,7 @@
           :class='{active:activeIndex == index}'
         >{{item[1]}}</p>
       </div>
+      <div class="noLyric" v-else> 暂无歌词</div>
     </div>
 
   </div>
@@ -87,6 +89,9 @@ export default {
     height: 70vh;
     color: #b3b0b0;
     overflow: hidden;
+    .noLyric{
+      line-height: 70vh;
+    }
   }
   .lyric-list{
     transition: all 1s;

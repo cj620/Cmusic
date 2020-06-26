@@ -1,7 +1,7 @@
 <template>
     <div class='bot-btn-box'>
         <!-- <span class='icon-prev iconfont' @click="prev"></span> -->
-        <span>
+        <span @click="prev">
           <svg class="icon left" aria-hidden="true"> <use xlink:href="#icon-bofangqi-xiayiji"></use> </svg>
        </span>
         <!-- <span :class='(isStop?"icon-play":"icon-stop")+" iconfont"' @click='change'></span> -->

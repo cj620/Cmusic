@@ -30,6 +30,8 @@ import { getSearchMultimatch, getSearchMusic } from '@/api/api.js'
         Promise.all([getSearchMusic(params),getSearchMultimatch(params)]).then(res =>{
           this.songList = res[0].result.songs
           this.isShowSongList = true
+          // console.log(res);
+          
         })
       }
     }

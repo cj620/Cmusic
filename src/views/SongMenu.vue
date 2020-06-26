@@ -93,6 +93,12 @@ export default {
       this.songInfo = res.playlist
       // console.log(res.playlist.tags);
       // console.log(this.songInfo.creator.avatarUrl);
+      //把歌单放到公共状态里
+      this.$store.state.trackIds = res.playlist.trackIds
+      // console.log(this.$store.state.trackIds[0].id);
+      
+      // console.log(res.playlist);
+      
     })
     
   }
