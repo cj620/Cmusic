@@ -112,8 +112,8 @@ import { Slider , Toast} from 'vant'
       // console.log("-----");
     },
     onChange(value) {
-      Toast('当前值：' + value);
-      console.log(parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1);  //
+      Toast('当前进度：' + value+'%');
+      // console.log(parseInt(this.$refs.audio.currentTime/this.$refs.audio.duration*100)+1);  //
       this.$refs.audio.currentTime = value*this.$refs.audio.duration/100
       
     },
@@ -127,8 +127,9 @@ import { Slider , Toast} from 'vant'
       this.musicId = this.$store.state.trackIds[this.playCount].id
       clearInterval(this.timer)
       this.init()
+      this.updateTime();               //重启进度条
     },
-    preSong(){
+    preSong(){  
       // console.log("=====");
       if(this.playCount<=0){
         this.playCount =0
@@ -137,6 +138,7 @@ import { Slider , Toast} from 'vant'
       this.musicId = this.$store.state.trackIds[this.playCount].id
       clearInterval(this.timer)
       this.init()
+      this.updateTime();
       }
       
     }
