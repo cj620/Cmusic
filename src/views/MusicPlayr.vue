@@ -123,15 +123,18 @@ import { Slider , Toast} from 'vant'
     nextSong(){
       // console.log(this.$store.state.trackIds[this.playCount].id);
       // getMusicUrl(this.$store.state.trackIds[0].id).then(res =>console.log(res.data[0].url))
-      this.playCount++
+      if(this.$store.state.trackIds.length != 0){
+        this.playCount++
       this.musicId = this.$store.state.trackIds[this.playCount].id
       clearInterval(this.timer)
       this.init()
       this.updateTime();               //重启进度条
+      }
     },
     preSong(){  
       // console.log("=====");
-      if(this.playCount<=0){
+      if(this.$store.state.trackIds.length != 0){
+        if(this.playCount<=0){
         this.playCount =0
       }else{
         this.playCount--
@@ -139,6 +142,7 @@ import { Slider , Toast} from 'vant'
       clearInterval(this.timer)
       this.init()
       this.updateTime();
+      }
       }
       
     }

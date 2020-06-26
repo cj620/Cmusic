@@ -84,8 +84,11 @@ export default {
   data() {
     return {
       songInfo: {
-        creator:{}
-      },
+        creator:{
+        },
+        tracks:[],
+        tags:[]
+      }
     }
   },
   created() {
@@ -98,6 +101,7 @@ export default {
       // console.log(this.$store.state.trackIds[0].id);
       
       // console.log(res.playlist);
+      // console.log(this.songInfo.tracks[0]);
       
     })
     
