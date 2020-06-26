@@ -125,7 +125,7 @@ export default {
   background-size: cover;
   transform: scale(2);
   z-index: -1;
-  filter: blur(20px);
+  filter: blur(20px) brightness(50%);
 }
 .sm-head > .sm-head-l {
   position: relative;

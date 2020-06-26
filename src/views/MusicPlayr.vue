@@ -168,7 +168,7 @@ import { Slider , Toast} from 'vant'
     transform: scale(1.5);
     transition: opacity 0.3s linear;
     z-index: -1;
-    filter: blur(16px);
+    filter: blur(16px) brightness(50%);
   }
   .song-title{
     position: fixed;
@@ -178,7 +178,7 @@ import { Slider , Toast} from 'vant'
     padding: 0 5vh;
     text-align: center;
     line-height: 10vh;
-    color: #443e8f9d;
+    color: #ffffff9d;
     font-size: 7vw;
     overflow: hidden;
 	  text-overflow:ellipsis;
