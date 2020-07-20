@@ -49,7 +49,7 @@ import { getMusicTopList } from '@/api/api'
     created(){
        // idx: 对象 key, 对应热歌榜
     const params = {
-      idx: 1
+      id: 1
     }
       getMusicTopList(params).then(res=>{
         this.songList = res.playlist.tracks.slice(0,30)
