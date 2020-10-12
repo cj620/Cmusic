@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 const service = axios.create({
-  baseURL: "https://pearmusic.online/",  //https://autumnfish.cn  http://music.jsososo.com/apiMix/ https://music.ztyuu.com/api/
+  baseURL: "https://pearmusic.online/api/",  //https://autumnfish.cn  http://music.jsososo.com/apiMix/ https://music.ztyuu.com/api/
   timeout: 5000, // request timeout
-  withCredentials:true    //跨域权限
+  withCredentials: true    //跨域权限
 });
 //请求拦截
 service.interceptors.request.use(
